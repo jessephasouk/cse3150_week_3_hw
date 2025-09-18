@@ -16,10 +16,26 @@ void addStudent(char* name, double gpa, char* names[], double gpas[], int& size,
 	}
 }
 // TODO: implement updateGPA
-
+void updateGPA(double* gpaPtr, double newGpa){
+	*gpaPtr = newGpa;
+}
 // TODO: implement printStudent
-
+void printStudent(const char* name, const double& gpa){
+	std::cout << "Name: " << name << ", GPA: " << gpa << endl;
+}
 // TODO: implement averageGPA
+double averageGPA (const double gpas[], int size){
+	if (size <= 0) {
+		throw std::string("No students");
+	}
+	double sum = 0.0;
+
+	for (int i = 0; i < size; ++i){
+		sum += gpas[i];
+	}	
+
+	return sum / size;
+}
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
@@ -46,10 +62,31 @@ int main(int argc, char* argv[]) {
         switch (choice) {
             case 1: {
                 // TODO: implement menu logic
+		std::string name;
+		double gpa;
+
+		std::cout << "Enter name: ";
+		std::cin >> name;
+		
+		std::cout << "Enter GPA: ";
+		std::cin >> gpa;
+
+		addStudent(name, gpa, names, gpas, size, capacity);
+
                 break;
             }
             case 2: {
                 // TODO: implement menu logic
+		double gpa;
+		int index; 
+
+		std::cout << "Enter index of student: ";
+		std::cin >> index;
+
+		std::cout << "Enter GPA: ";
+		std::cin >> gpa;
+
+		
                 break;
             }
             case 3: {
