@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <cstring>   // for strlen, strcpy
 
@@ -7,10 +6,11 @@
 // TODO: implement addStudent
 void addStudent(char* name, double gpa, char* names[], double gpas[], int& size, int capacity) {
 	if (size >= capacity) {
-		throw std::string("List full");
+		throw "List full";
 	} 
 	else {
-		names[size] = name;
+		names[size] = new char[strlen(name) + 1];
+		strcpy(names[size], name);
 		gpas[size] = gpa;
 		size++;
 	}
@@ -21,12 +21,12 @@ void updateGPA(double* gpaPtr, double newGpa){
 }
 // TODO: implement printStudent
 void printStudent(const char* name, const double& gpa){
-	std::cout << "Name: " << name << ", GPA: " << gpa << endl;
+	std::cout << "Name: " << name << ", GPA: " << gpa << std::endl;
 }
 // TODO: implement averageGPA
 double averageGPA (const double gpas[], int size){
 	if (size <= 0) {
-		throw std::string("No students");
+		throw "No students";
 	}
 	double sum = 0.0;
 
@@ -62,17 +62,24 @@ int main(int argc, char* argv[]) {
         switch (choice) {
             case 1: {
                 // TODO: implement menu logic
-		std::string name;
 		double gpa;
+		std::string temp;	
 
 		std::cout << "Enter name: ";
-		std::cin >> name;
-		
+		std::cin >> temp;	
+
+		size_t length = strlen(temp.c_str());
+
+		char* name = new char[length + 1];
+		strcpy(name, temp.c_str());
+
 		std::cout << "Enter GPA: ";
 		std::cin >> gpa;
-
-		addStudent(name, gpa, names, gpas, size, capacity);
-
+		try {
+			addStudent(name, gpa, names, gpas, size, capacity);
+		} catch(const char* msg){
+			std::cout << msg << std::endl;
+		}
                 break;
             }
             case 2: {
@@ -86,15 +93,25 @@ int main(int argc, char* argv[]) {
 		std::cout << "Enter GPA: ";
 		std::cin >> gpa;
 
+		updateGPA(&gpas[index], gpa);
 		
                 break;
             }
             case 3: {
                 // TODO: implement menu logic
+		for(int i = 0; i<size; ++i){
+			printStudent(names[i], gpas[i]);
+		}
                 break;
             }
             case 4: {
                 // TODO: implement menu logic
+		try {
+			double average = averageGPA(gpas, size);
+			std::cout << "Average GPA: " << static_cast<int>(average) << std::endl;
+		} catch(const char* msg){
+			std::cout << msg << std::endl;
+		}
                 break;
             }
             case 5: {
@@ -108,6 +125,9 @@ int main(int argc, char* argv[]) {
     } while (choice != 5);
 
     // TODO: free memory
-
+	for(int i = 0; i < size; ++i){
+		delete[] names[i];	
+	}
     return 0;
 }
+
