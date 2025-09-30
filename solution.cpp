@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstring>   // for strlen, strcpy
-
+#include <string>
 // TODO: function prototypes
 
 // TODO: implement addStudent
