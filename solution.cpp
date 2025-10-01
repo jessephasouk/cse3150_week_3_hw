@@ -89,11 +89,13 @@ int main(int argc, char* argv[]) {
 
 		std::cout << "Enter index of student: ";
 		std::cin >> index;
-
-		std::cout << "Enter GPA: ";
-		std::cin >> gpa;
-
-		updateGPA(&gpas[index], gpa);
+		if(index < size && index >= 0){
+			std::cout << "Enter GPA: ";
+			std::cin >> gpa;
+			updateGPA(&gpas[index], gpa);
+		} else {
+			std::cout << "Invalid index" << std::endl;
+		}
 		
                 break;
             }
